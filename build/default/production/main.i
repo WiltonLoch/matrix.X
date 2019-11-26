@@ -1020,22 +1020,35 @@ void finalizarEnvio();
 void desenharMatriz(char [8]);
 void inicializarDisplay();
 __attribute__((inline)) void renderizar(char * mapa, Ponto aux);
-__attribute__((inline)) void ativarTrigger();
 
-char tamanho_kobra = 3;
+void inicializarJogo(char * mapa, Ponto * ovo, Ponto * kobra);
+
+char tamanho_kobra = 1;
 char dir = 0x2;
+char inicio = 0;
+
+char check = 0;
+char pause = 1;
+
+void __attribute__((picinterrupt(("")))) echo (void){
+    GIE = 0;
+    if (RBIF == 1){
+        if (RB4 == 1){
+            if(pause)
+                pause = !pause;
+            dir = ++dir%4;
+            while(RB4 == 1) _delay((unsigned long)((10000)*(4000000/4000000.0)));
+        }
+        RBIF = 0;
+    }
+    GIE = 1;
+}
 
 void main(void) {
     char semente;
     char i;
     Ponto kobra[32];
     Ponto ovo;
-
-    ovo.i = 7;
-    ovo.j = 2;
-
-    kobra[0].i = 0;
-    kobra[0].j = 2;
 
     CMCON = 0x07;
     TRISA = 0b00000000;
@@ -1059,52 +1072,73 @@ void main(void) {
     inicializarDisplay();
 
     while(1) {
-        TMR1ON = 0;
-        TMR1H = 0;
-        TMR1L = 0;
+        if(!pause) {
+            if(kobra[0].i == ovo.i && kobra[0].j == ovo.j){
+                tamanho_kobra++;
+                semente = ((semente | kobra[0].i) & (semente | ~kobra[0].j))%64;
+                ovo.i = semente/8;
+                ovo.j = semente%8;
+            }
 
+            for(i = 1; i < tamanho_kobra; i++)
+                if(kobra[i].j == kobra[0].j && kobra[i].i == kobra[0].i) pause = 1;
 
+            for(i = 0; i < tamanho_kobra; i++) {
+                renderizar(mapa, kobra[i]);
+            }
 
-        if(kobra[0].i == ovo.i && kobra[0].j == ovo.j){
-            tamanho_kobra++;
-            semente = ((semente | kobra[0].i) & (semente | ~kobra[0].j))%64;
-            ovo.i = semente/8;
-            ovo.j = semente%8;
+            for(i = tamanho_kobra - 1; i > 0; --i) {
+                kobra[i].i = kobra[i-1].i;
+                kobra[i].j = kobra[i-1].j;
+            }
+
+            switch(dir) {
+                case 0x00: kobra[0].i = (--kobra[0].i)%8; break;
+                case 0x01: kobra[0].j = (++kobra[0].j)%8; break;
+                case 0x02: kobra[0].i = (++kobra[0].i)%8; break;
+                case 0x03: kobra[0].j = (--kobra[0].j)%8; break;
+            }
+
+            renderizar(mapa, ovo);
+            desenharMatriz(mapa);
+            _delay((unsigned long)((200)*(4000000/4000.0)));
+
+            semente += kobra[0].i * 8 + kobra[0].j;
+            for(i = 0; i < 8; i++)
+                mapa[i] = 0b0;
+        } else {
+            inicializarJogo(mapa, &ovo, kobra);
+            mapa[0] = 0b00000011;
+            mapa[1] = 0b00000111;
+            mapa[2] = 0b00001110;
+            mapa[3] = 0b10011100;
+            mapa[4] = 0b10111000;
+            mapa[5] = 0b11110000;
+            mapa[6] = 0b11100000;
+            mapa[7] = 0b11111000;
+            desenharMatriz(mapa);
         }
-
-
-        renderizar(mapa, ovo);
-
-        for(i = 0; i < tamanho_kobra; i++) {
-            renderizar(mapa, kobra[i]);
-        }
-
-        for(i = tamanho_kobra - 1; i > 0; --i) {
-            kobra[i].i = kobra[i-1].i;
-            kobra[i].j = kobra[i-1].j;
-        }
-
-        switch(dir) {
-            case 0x00: kobra[0].i = (--kobra[0].i)%8; break;
-            case 0x01: kobra[0].j = (++kobra[0].j)%8; break;
-            case 0x02: kobra[0].i = (++kobra[0].i)%8; break;
-            case 0x03: kobra[0].j = (--kobra[0].j)%8; break;
-        }
-
-        desenharMatriz(mapa);
-        _delay((unsigned long)((200)*(4000000/4000.0)));
-
-        semente += kobra[0].i * 8 + kobra[0].j;
-        for(i = 0; i < 8; i++)
-            mapa[i] = 0b0;
     }
     return;
 }
 
+void inicializarJogo(char * mapa, Ponto * ovo, Ponto * kobra){
+    mapa[0] = 0b00000000;
+    mapa[1] = 0b00000000;
+    mapa[2] = 0b00000000;
+    mapa[3] = 0b00000000;
+    mapa[4] = 0b00000000;
+    mapa[5] = 0b00000000;
+    mapa[6] = 0b00000000;
+    mapa[7] = 0b00000000;
 
+    ovo->i = 7;
+    ovo->j = 2;
 
-
-
+    kobra[0].i = 0;
+    kobra[0].j = 2;
+    tamanho_kobra = 1;
+}
 
 
 __attribute__((inline)) void renderizar(char * mapa, Ponto aux){
