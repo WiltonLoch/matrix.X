@@ -330,44 +330,44 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _mapa `uc ~T0 @X0 -> 8 `i a ]
 [e = _mapa F499 ]
 "78
-[; ;main.c: 78:             for(i = tamanho_kobra - 1; i > 0; --i) {
+[; ;main.c: 78: 
 [e ( _inicializarDisplay ..  ]
 "80
-[; ;main.c: 80:                 kobra[i].j = kobra[i-1].j;
+[; ;main.c: 80:                 case 0x00: kobra[0].i = (--kobra[0].i)%8; break;
 [e :U 61 ]
 {
 "81
-[; ;main.c: 81:             }
+[; ;main.c: 81:                 case 0x01: kobra[0].j = (++kobra[0].j)%8; break;
 [e $ ! ! != -> _pause `i -> 0 `i 63  ]
 {
 "82
-[; ;main.c: 82: 
+[; ;main.c: 82:                 case 0x02: kobra[0].i = (++kobra[0].i)%8; break;
 [e $ ! && == -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 `i -> . _ovo 0 `i == -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 `i -> . _ovo 1 `i 64  ]
 {
 "83
-[; ;main.c: 83:             switch(dir) {
+[; ;main.c: 83:                 case 0x03: kobra[0].j = (--kobra[0].j)%8; break;
 [e ++ _tamanho_kobra -> -> 1 `i `uc ]
 "84
-[; ;main.c: 84:                 case 0x00: kobra[0].i = (--kobra[0].i)%8; break;
+[; ;main.c: 84:             }
 [e = _semente -> % & | -> _semente `i -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 `i | -> _semente `i ~ -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 `i -> 64 `i `uc ]
 "85
-[; ;main.c: 85:                 case 0x01: kobra[0].j = (++kobra[0].j)%8; break;
+[; ;main.c: 85: 
 [e = . _ovo 0 -> / -> _semente `i -> 8 `i `uc ]
 "86
-[; ;main.c: 86:                 case 0x02: kobra[0].i = (++kobra[0].i)%8; break;
+[; ;main.c: 86:             for(char i = 0; i < 8; i++) mapa[i] = 0x00;
 [e = . _ovo 1 -> % -> _semente `i -> 8 `i `uc ]
 "87
-[; ;main.c: 87:                 case 0x03: kobra[0].j = (--kobra[0].j)%8; break;
+[; ;main.c: 87: 
 }
 [e :U 64 ]
 "89
-[; ;main.c: 89: 
+[; ;main.c: 89:                 renderizar(mapa, kobra[i]);
 {
 [e = _i -> -> 1 `i `uc ]
 [e $U 68  ]
 [e :U 65 ]
 "90
-[; ;main.c: 90:             renderizar(mapa, ovo);
+[; ;main.c: 90:             }
 [e $ ! && == -> . *U + &U _kobra * -> _i `ux -> -> # *U &U _kobra `ui `ux 1 `i -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 `i == -> . *U + &U _kobra * -> _i `ux -> -> # *U &U _kobra `ui `ux 0 `i -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 `i 69  ]
 [e = _pause -> -> 1 `i `uc ]
 [e :U 69 ]
@@ -377,160 +377,187 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 66 ]
 }
 "92
-[; ;main.c: 92:             _delay((unsigned long)((200)*(4000000/4000.0)));
+[; ;main.c: 92:             renderizar(mapa, ovo);
 {
-[e = _i -> -> 0 `i `uc ]
-[e $U 73  ]
+[e = _i -> - -> _tamanho_kobra `i -> 1 `i `uc ]
+[e $ > -> _i `i -> 0 `i 70  ]
+[e $U 71  ]
 [e :U 70 ]
 {
 "93
-[; ;main.c: 93: 
-[e ( _renderizar (2 , &U _mapa *U + &U _kobra * -> _i `ux -> -> # *U &U _kobra `ui `ux ]
-"94
-[; ;main.c: 94:             semente += kobra[0].i * 8 + kobra[0].j;
-}
-[e ++ _i -> -> 1 `i `uc ]
-[e :U 73 ]
-[e $ < -> _i `i -> _tamanho_kobra `i 70  ]
-[e :U 71 ]
-}
-"96
-[; ;main.c: 96:                 mapa[i] = 0b0;
-{
-[e = _i -> - -> _tamanho_kobra `i -> 1 `i `uc ]
-[e $ > -> _i `i -> 0 `i 74  ]
-[e $U 75  ]
-[e :U 74 ]
-{
-"97
-[; ;main.c: 97:         } else {
+[; ;main.c: 93:             desenharMatriz(mapa);
 [e = . *U + &U _kobra * -> _i `ux -> -> # *U &U _kobra `ui `ux 0 . *U + &U _kobra * -> -> - -> _i `i -> 1 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 ]
-"98
-[; ;main.c: 98:             inicializarJogo(mapa, &ovo, kobra);
+"94
+[; ;main.c: 94: 
 [e = . *U + &U _kobra * -> _i `ux -> -> # *U &U _kobra `ui `ux 1 . *U + &U _kobra * -> -> - -> _i `i -> 1 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 ]
-"99
-[; ;main.c: 99:             mapa[0] = 0b00000011;
+"95
+[; ;main.c: 95: 
 }
 [e =- _i -> -> 1 `i `uc ]
-[e $ > -> _i `i -> 0 `i 74  ]
+[e $ > -> _i `i -> 0 `i 70  ]
+[e :U 71 ]
+}
+"97
+[; ;main.c: 97:             for(i = 0; i < 15 - tamanho_kobra; i++)
+[e $U 74  ]
+{
+"98
+[; ;main.c: 98:                 _delay((unsigned long)((12)*(4000000/4000.0)));
 [e :U 75 ]
-}
-"101
-[; ;main.c: 101:             mapa[2] = 0b00001110;
-[e $U 78  ]
-{
-"102
-[; ;main.c: 102:             mapa[3] = 0b10011100;
-[e :U 79 ]
 [e = . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 -> % -> =- . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 -> -> 1 `i `uc `i -> 8 `i `uc ]
-[e $U 77  ]
-"103
-[; ;main.c: 103:             mapa[4] = 0b10111000;
-[e :U 80 ]
+[e $U 73  ]
+"99
+[; ;main.c: 99: 
+[e :U 76 ]
 [e = . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 -> % -> =+ . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 -> -> 1 `i `uc `i -> 8 `i `uc ]
-[e $U 77  ]
-"104
-[; ;main.c: 104:             mapa[5] = 0b11110000;
-[e :U 81 ]
-[e = . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 -> % -> =+ . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 -> -> 1 `i `uc `i -> 8 `i `uc ]
-[e $U 77  ]
-"105
-[; ;main.c: 105:             mapa[6] = 0b11100000;
-[e :U 82 ]
-[e = . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 -> % -> =- . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 -> -> 1 `i `uc `i -> 8 `i `uc ]
-[e $U 77  ]
-"106
-[; ;main.c: 106:             mapa[7] = 0b11111000;
-}
-[e $U 77  ]
-[e :U 78 ]
-[e [\ -> _dir `i , $ -> 0 `i 79
- , $ -> 1 `i 80
- , $ -> 2 `i 81
- , $ -> 3 `i 82
- 77 ]
+[e $U 73  ]
+"100
+[; ;main.c: 100:             semente += kobra[0].i * 8 + kobra[0].j;
 [e :U 77 ]
-"108
-[; ;main.c: 108:         }
-[e ( _renderizar (2 , &U _mapa _ovo ]
-"109
-[; ;main.c: 109:     }
-[e ( _desenharMatriz (1 &U _mapa ]
-"110
-[; ;main.c: 110:     return;
-[e ( __delay (1 -> * -> -> 200 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
-"112
-[; ;main.c: 112: 
-[e =+ _semente -> + * -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 `i -> 8 `i -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 `i `uc ]
-"113
-[; ;main.c: 113: void inicializarJogo(char * mapa, Ponto * ovo, Ponto * kobra){
+[e = . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 -> % -> =+ . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 -> -> 1 `i `uc `i -> 8 `i `uc ]
+[e $U 73  ]
+"101
+[; ;main.c: 101:             for(i = 0; i < 8; i++)
+[e :U 78 ]
+[e = . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 -> % -> =- . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 -> -> 1 `i `uc `i -> 8 `i `uc ]
+[e $U 73  ]
+"102
+[; ;main.c: 102:                 mapa[i] = 0b0;
+}
+[e $U 73  ]
+[e :U 74 ]
+[e [\ -> _dir `i , $ -> 0 `i 75
+ , $ -> 1 `i 76
+ , $ -> 2 `i 77
+ , $ -> 3 `i 78
+ 73 ]
+[e :U 73 ]
+"104
+[; ;main.c: 104:             inicializarJogo(mapa, &ovo, kobra);
 {
+[v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 83  ]
-[e $U 84  ]
-[e :U 83 ]
-"114
-[; ;main.c: 114:     mapa[0] = 0b00000000;
+[e $ < -> _i `i -> 8 `i 79  ]
+[e $U 80  ]
+[e :U 79 ]
 [e = *U + &U _mapa * -> _i `ux -> -> # *U &U _mapa `ui `ux -> -> 0 `i `uc ]
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 83  ]
-[e :U 84 ]
+[e $ < -> _i `i -> 8 `i 79  ]
+[e :U 80 ]
 }
+"106
+[; ;main.c: 106:             mapa[1] = 0b00000111;
+{
+[e = _i -> -> 0 `i `uc ]
+[e $U 85  ]
+[e :U 82 ]
+{
+"107
+[; ;main.c: 107:             mapa[2] = 0b00001110;
+[e ( _renderizar (2 , &U _mapa *U + &U _kobra * -> _i `ux -> -> # *U &U _kobra `ui `ux ]
+"108
+[; ;main.c: 108:             mapa[3] = 0b10011100;
+}
+[e ++ _i -> -> 1 `i `uc ]
+[e :U 85 ]
+[e $ < -> _i `i -> _tamanho_kobra `i 82  ]
+[e :U 83 ]
+}
+"110
+[; ;main.c: 110:             mapa[5] = 0b11110000;
+[e ( _renderizar (2 , &U _mapa _ovo ]
+"111
+[; ;main.c: 111:             mapa[6] = 0b11100000;
+[e ( _desenharMatriz (1 &U _mapa ]
+"114
+[; ;main.c: 114:         }
+[e ( __delay (1 -> * -> -> 20 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
 "115
-[; ;main.c: 115:     mapa[1] = 0b00000000;
+[; ;main.c: 115:     }
+{
+[e = _i -> -> 0 `i `uc ]
+[e $U 89  ]
+[e :U 86 ]
+"116
+[; ;main.c: 116:     return;
+[e ( __delay (1 -> * -> -> 12 `i `d / -> -> 4000000 `l `d .4000.0 `ul ]
+[e ++ _i -> -> 1 `i `uc ]
+[e :U 89 ]
+[e $ < -> _i `i - -> 15 `i -> _tamanho_kobra `i 86  ]
+[e :U 87 ]
 }
-[e $U 86  ]
+"118
+[; ;main.c: 118: 
+[e =+ _semente -> + * -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 0 `i -> 8 `i -> . *U + &U _kobra * -> -> -> 0 `i `ui `ux -> -> # *U &U _kobra `ui `ux 1 `i `uc ]
+"119
+[; ;main.c: 119: void inicializarJogo(char * mapa, Ponto * ovo, Ponto * kobra){
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 8 `i 90  ]
+[e $U 91  ]
+[e :U 90 ]
+"120
+[; ;main.c: 120:     mapa[0] = 0b00000000;
+[e = *U + &U _mapa * -> _i `ux -> -> # *U &U _mapa `ui `ux -> -> 0 `i `uc ]
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 8 `i 90  ]
+[e :U 91 ]
+}
+"121
+[; ;main.c: 121:     mapa[1] = 0b00000000;
+}
+[e $U 93  ]
 [e :U 63 ]
 {
-"116
-[; ;main.c: 116:     mapa[2] = 0b00000000;
-[e ( _inicializarJogo (3 , , &U _mapa &U _ovo &U _kobra ]
-"117
-[; ;main.c: 117:     mapa[3] = 0b00000000;
-[e = *U + &U _mapa * -> -> -> 0 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 3 `i `uc ]
-"118
-[; ;main.c: 118:     mapa[4] = 0b00000000;
-[e = *U + &U _mapa * -> -> -> 1 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 7 `i `uc ]
-"119
-[; ;main.c: 119:     mapa[5] = 0b00000000;
-[e = *U + &U _mapa * -> -> -> 2 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 14 `i `uc ]
-"120
-[; ;main.c: 120:     mapa[6] = 0b00000000;
-[e = *U + &U _mapa * -> -> -> 3 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 156 `i `uc ]
-"121
-[; ;main.c: 121:     mapa[7] = 0b00000000;
-[e = *U + &U _mapa * -> -> -> 4 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 184 `i `uc ]
 "122
-[; ;main.c: 122: 
-[e = *U + &U _mapa * -> -> -> 5 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 240 `i `uc ]
+[; ;main.c: 122:     mapa[2] = 0b00000000;
+[e ( _inicializarJogo (3 , , &U _mapa &U _ovo &U _kobra ]
 "123
-[; ;main.c: 123:     ovo->i = 7;
-[e = *U + &U _mapa * -> -> -> 6 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 224 `i `uc ]
+[; ;main.c: 123:     mapa[3] = 0b00000000;
+[e = *U + &U _mapa * -> -> -> 0 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 3 `i `uc ]
 "124
-[; ;main.c: 124:     ovo->j = 2;
-[e = *U + &U _mapa * -> -> -> 7 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 248 `i `uc ]
+[; ;main.c: 124:     mapa[4] = 0b00000000;
+[e = *U + &U _mapa * -> -> -> 1 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 7 `i `uc ]
 "125
-[; ;main.c: 125: 
-[e ( _desenharMatriz (1 &U _mapa ]
+[; ;main.c: 125:     mapa[5] = 0b00000000;
+[e = *U + &U _mapa * -> -> -> 2 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 14 `i `uc ]
 "126
-[; ;main.c: 126:     kobra[0].i = 0;
-}
-[e :U 86 ]
+[; ;main.c: 126:     mapa[6] = 0b00000000;
+[e = *U + &U _mapa * -> -> -> 3 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 156 `i `uc ]
 "127
-[; ;main.c: 127:     kobra[0].j = 2;
+[; ;main.c: 127:     mapa[7] = 0b00000000;
+[e = *U + &U _mapa * -> -> -> 4 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 184 `i `uc ]
+"128
+[; ;main.c: 128: 
+[e = *U + &U _mapa * -> -> -> 5 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 240 `i `uc ]
+"129
+[; ;main.c: 129:     ovo->i = 7;
+[e = *U + &U _mapa * -> -> -> 6 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 224 `i `uc ]
+"130
+[; ;main.c: 130:     ovo->j = 2;
+[e = *U + &U _mapa * -> -> -> 7 `i `ui `ux -> -> # *U &U _mapa `ui `ux -> -> 248 `i `uc ]
+"131
+[; ;main.c: 131: 
+[e ( _desenharMatriz (1 &U _mapa ]
+"132
+[; ;main.c: 132:     kobra[0].i = 0;
+}
+[e :U 93 ]
+"133
+[; ;main.c: 133:     kobra[0].j = 2;
 }
 [e :U 60 ]
 [e $U 61  ]
 [e :U 62 ]
-"128
-[; ;main.c: 128:     tamanho_kobra = 1;
+"134
+[; ;main.c: 134:     tamanho_kobra = 1;
 [e $UE 59  ]
-"129
-[; ;main.c: 129: }
+"135
+[; ;main.c: 135: }
 [e :UE 59 ]
 }
-"131
-[; ;main.c: 131: 
+"137
+[; ;main.c: 137: 
 [v _inicializarJogo `(v ~T0 @X0 1 ef3`*uc`*S51`*S51 ]
 {
 [e :U _inicializarJogo ]
@@ -538,274 +565,274 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _ovo `*S51 ~T0 @X0 1 r2 ]
 [v _kobra `*S51 ~T0 @X0 1 r3 ]
 [f ]
-"132
-[; ;main.c: 132: __attribute__((inline)) void renderizar(char * mapa, Ponto aux){
-[e = *U + _mapa * -> -> 0 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
-"133
-[; ;main.c: 133:     mapa[aux.i] |= 0x80 >> aux.j;
-[e = *U + _mapa * -> -> 1 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
-"134
-[; ;main.c: 134: }
-[e = *U + _mapa * -> -> 2 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
-"135
-[; ;main.c: 135: 
-[e = *U + _mapa * -> -> 3 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
-"136
-[; ;main.c: 136: void inicializarDisplay() {
-[e = *U + _mapa * -> -> 4 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
-"137
-[; ;main.c: 137:     char parteAlta = 0b00001100;
-[e = *U + _mapa * -> -> 5 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
 "138
-[; ;main.c: 138:     char parteBaixa = 0b00000001;
-[e = *U + _mapa * -> -> 6 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
+[; ;main.c: 138: __attribute__((inline)) void renderizar(char * mapa, Ponto aux){
+[e = *U + _mapa * -> -> 0 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
 "139
-[; ;main.c: 139:     enviarParaDisplay(parteAlta, parteBaixa);
-[e = *U + _mapa * -> -> 7 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
+[; ;main.c: 139:     mapa[aux.i] |= 0x80 >> aux.j;
+[e = *U + _mapa * -> -> 1 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
+"140
+[; ;main.c: 140: }
+[e = *U + _mapa * -> -> 2 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
 "141
-[; ;main.c: 141:     parteAlta = 0b00001001;
-[e = . *U _ovo 0 -> -> 7 `i `uc ]
+[; ;main.c: 141: 
+[e = *U + _mapa * -> -> 3 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
 "142
-[; ;main.c: 142:     parteBaixa = 0b00000000;
-[e = . *U _ovo 1 -> -> 2 `i `uc ]
+[; ;main.c: 142: void inicializarDisplay() {
+[e = *U + _mapa * -> -> 4 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
+"143
+[; ;main.c: 143:     char parteAlta = 0b00001100;
+[e = *U + _mapa * -> -> 5 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
 "144
-[; ;main.c: 144: 
-[e = . *U + _kobra * -> -> 0 `i `x -> -> # *U _kobra `i `x 0 -> -> 0 `i `uc ]
+[; ;main.c: 144:     char parteBaixa = 0b00000001;
+[e = *U + _mapa * -> -> 6 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
 "145
-[; ;main.c: 145:     parteAlta = 0b00001011;
-[e = . *U + _kobra * -> -> 0 `i `x -> -> # *U _kobra `i `x 1 -> -> 2 `i `uc ]
-"146
-[; ;main.c: 146:     parteBaixa = 0x07;
-[e = _tamanho_kobra -> -> 1 `i `uc ]
+[; ;main.c: 145:     enviarParaDisplay(parteAlta, parteBaixa);
+[e = *U + _mapa * -> -> 7 `i `x -> -> # *U _mapa `i `x -> -> 0 `i `uc ]
 "147
-[; ;main.c: 147:     enviarParaDisplay(parteAlta, parteBaixa);
-[e :UE 87 ]
-}
-[v F506 `(v ~T0 @X0 1 tf2`*uc`S51 ]
+[; ;main.c: 147:     parteAlta = 0b00001001;
+[e = . *U _ovo 0 -> -> 7 `i `uc ]
+"148
+[; ;main.c: 148:     parteBaixa = 0b00000000;
+[e = . *U _ovo 1 -> -> 2 `i `uc ]
 "150
-[; ;main.c: 150: void desenharMatriz(char vetor[8]){
-[v _renderizar `TF506 ~T0 @X0 1 e ]
+[; ;main.c: 150: 
+[e = . *U + _kobra * -> -> 0 `i `x -> -> # *U _kobra `i `x 0 -> -> 0 `i `uc ]
+"151
+[; ;main.c: 151:     parteAlta = 0b00001011;
+[e = . *U + _kobra * -> -> 0 `i `x -> -> # *U _kobra `i `x 1 -> -> 2 `i `uc ]
+"152
+[; ;main.c: 152:     parteBaixa = 0x07;
+[e = _tamanho_kobra -> -> 1 `i `uc ]
+"153
+[; ;main.c: 153:     enviarParaDisplay(parteAlta, parteBaixa);
+[e :UE 94 ]
+}
+[v F507 `(v ~T0 @X0 1 tf2`*uc`S51 ]
+"156
+[; ;main.c: 156: void desenharMatriz(char vetor[8]){
+[v _renderizar `TF507 ~T0 @X0 1 e ]
 {
 [e :U _renderizar ]
 [v _mapa `*uc ~T0 @X0 1 r1 ]
 [v _aux `S51 ~T0 @X0 1 r2 ]
 [f ]
-"151
-[; ;main.c: 151:     char temp[8] = {0x00};
+"157
+[; ;main.c: 157:     char temp[8] = {0x00};
 [e =| *U + _mapa * -> . _aux 0 `ux -> -> # *U _mapa `ui `ux -> >> -> 128 `i -> . _aux 1 `i `uc ]
-"152
-[; ;main.c: 152:     char indice = 0x80;
-[e :UE 88 ]
+"158
+[; ;main.c: 158:     char indice = 0x80;
+[e :UE 95 ]
 }
-"154
-[; ;main.c: 154:         for(char j = 0; j < 8; j++){
+"160
+[; ;main.c: 160:         for(char j = 0; j < 8; j++){
 [v _inicializarDisplay `(v ~T0 @X0 1 ef ]
 {
 [e :U _inicializarDisplay ]
 [f ]
-"155
-[; ;main.c: 155:             temp[i] |= (vetor[j] & indice) << i >> (7 - j);
+"161
+[; ;main.c: 161:             temp[i] |= (vetor[j] & indice) << i >> (7 - j);
 [v _parteAlta `uc ~T0 @X0 1 a ]
 [e = _parteAlta -> -> 12 `i `uc ]
-"156
-[; ;main.c: 156:         }
+"162
+[; ;main.c: 162:         }
 [v _parteBaixa `uc ~T0 @X0 1 a ]
 [e = _parteBaixa -> -> 1 `i `uc ]
-"157
-[; ;main.c: 157:         indice = indice >> 1;
-[e ( _enviarParaDisplay (2 , _parteAlta _parteBaixa ]
-"159
-[; ;main.c: 159:     for(char i = 0; i < 8; i++){
-[e = _parteAlta -> -> 9 `i `uc ]
-"160
-[; ;main.c: 160:         enviarParaDisplay(i + 1, temp[i]);
-[e = _parteBaixa -> -> 0 `i `uc ]
-"161
-[; ;main.c: 161:     }
-[e ( _enviarParaDisplay (2 , _parteAlta _parteBaixa ]
 "163
-[; ;main.c: 163: 
-[e = _parteAlta -> -> 11 `i `uc ]
-"164
-[; ;main.c: 164: void enviarParaDisplay(char parteAlta, char parteBaixa){
-[e = _parteBaixa -> -> 7 `i `uc ]
-"165
-[; ;main.c: 165:     RA0 = 0;
+[; ;main.c: 163:         indice = indice >> 1;
 [e ( _enviarParaDisplay (2 , _parteAlta _parteBaixa ]
+"165
+[; ;main.c: 165:     for(char i = 0; i < 8; i++){
+[e = _parteAlta -> -> 9 `i `uc ]
 "166
-[; ;main.c: 166:     for(int i = 0; i < 8; i++){
-[e :UE 89 ]
+[; ;main.c: 166:         enviarParaDisplay(i + 1, temp[i]);
+[e = _parteBaixa -> -> 0 `i `uc ]
+"167
+[; ;main.c: 167:     }
+[e ( _enviarParaDisplay (2 , _parteAlta _parteBaixa ]
+"169
+[; ;main.c: 169: 
+[e = _parteAlta -> -> 11 `i `uc ]
+"170
+[; ;main.c: 170: void enviarParaDisplay(char parteAlta, char parteBaixa){
+[e = _parteBaixa -> -> 7 `i `uc ]
+"171
+[; ;main.c: 171:     RA0 = 0;
+[e ( _enviarParaDisplay (2 , _parteAlta _parteBaixa ]
+"172
+[; ;main.c: 172:     for(int i = 0; i < 8; i++){
+[e :UE 96 ]
 }
-"168
-[; ;main.c: 168:         RA2 = (temp == 128 ? 1 : 0);
+"174
+[; ;main.c: 174:         RA2 = (temp == 128 ? 1 : 0);
 [v _desenharMatriz `(v ~T0 @X0 1 ef1`*uc ]
 {
 [e :U _desenharMatriz ]
 [v _vetor `*uc ~T0 @X0 1 r1 ]
 [f ]
-[v F514 `uc ~T0 @X0 -> 8 `i s ]
-[i F514
+[v F515 `uc ~T0 @X0 -> 8 `i s ]
+[i F515
 :U ..
-"169
-[; ;main.c: 169:         RA0 = 1;
+"175
+[; ;main.c: 175:         RA0 = 1;
 -> -> 0 `i `uc
 ..
 ]
 [v _temp `uc ~T0 @X0 -> 8 `i a ]
-[e = _temp F514 ]
-"170
-[; ;main.c: 170:         _delay((unsigned long)((100)*(4000000/4000000.0)));
+[e = _temp F515 ]
+"176
+[; ;main.c: 176:         _delay((unsigned long)((100)*(4000000/4000000.0)));
 [v _indice `uc ~T0 @X0 1 a ]
 [e = _indice -> -> 128 `i `uc ]
-"171
-[; ;main.c: 171:         RA0 = 0;
+"177
+[; ;main.c: 177:         RA0 = 0;
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 91  ]
-[e $U 92  ]
-[e :U 91 ]
+[e $ < -> _i `i -> 8 `i 98  ]
+[e $U 99  ]
+[e :U 98 ]
 {
-"172
-[; ;main.c: 172:         parteAlta = parteAlta << 1;
+"178
+[; ;main.c: 178:         parteAlta = parteAlta << 1;
 {
 [v _j `uc ~T0 @X0 1 a ]
 [e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 8 `i 94  ]
-[e $U 95  ]
-[e :U 94 ]
+[e $ < -> _j `i -> 8 `i 101  ]
+[e $U 102  ]
+[e :U 101 ]
 {
-"173
-[; ;main.c: 173:     }
+"179
+[; ;main.c: 179:     }
 [e =| *U + &U _temp * -> _i `ux -> -> # *U &U _temp `ui `ux -> >> << & -> *U + _vetor * -> _j `ux -> -> # *U _vetor `ui `ux `i -> _indice `i -> _i `i - -> 7 `i -> _j `i `uc ]
-"174
-[; ;main.c: 174: 
+"180
+[; ;main.c: 180: 
 }
 [e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 8 `i 94  ]
-[e :U 95 ]
+[e $ < -> _j `i -> 8 `i 101  ]
+[e :U 102 ]
 }
-"175
-[; ;main.c: 175:     for(int i = 0; i < 8; i++){
+"181
+[; ;main.c: 181:     for(int i = 0; i < 8; i++){
 [e = _indice -> >> -> _indice `i -> 1 `i `uc ]
-"176
-[; ;main.c: 176:         char temp = parteBaixa & 128;
+"182
+[; ;main.c: 182:         char temp = parteBaixa & 128;
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 91  ]
-[e :U 92 ]
+[e $ < -> _i `i -> 8 `i 98  ]
+[e :U 99 ]
 }
-"177
-[; ;main.c: 177:         RA2 = (temp == 128 ? 1 : 0);
+"183
+[; ;main.c: 183:         RA2 = (temp == 128 ? 1 : 0);
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 97  ]
-[e $U 98  ]
-[e :U 97 ]
+[e $ < -> _i `i -> 8 `i 104  ]
+[e $U 105  ]
+[e :U 104 ]
 {
-"178
-[; ;main.c: 178:         RA0 = 1;
+"184
+[; ;main.c: 184:         RA0 = 1;
 [e ( _enviarParaDisplay (2 , -> + -> _i `i -> 1 `i `uc *U + &U _temp * -> _i `ux -> -> # *U &U _temp `ui `ux ]
-"179
-[; ;main.c: 179:         _delay((unsigned long)((100)*(4000000/4000000.0)));
+"185
+[; ;main.c: 185:         _delay((unsigned long)((100)*(4000000/4000000.0)));
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 97  ]
-[e :U 98 ]
+[e $ < -> _i `i -> 8 `i 104  ]
+[e :U 105 ]
 }
-"180
-[; ;main.c: 180:         RA0 = 0;
-[e :UE 90 ]
+"186
+[; ;main.c: 186:         RA0 = 0;
+[e :UE 97 ]
 }
-"182
-[; ;main.c: 182:     }
+"188
+[; ;main.c: 188:     }
 [v _enviarParaDisplay `(v ~T0 @X0 1 ef2`uc`uc ]
 {
 [e :U _enviarParaDisplay ]
 [v _parteAlta `uc ~T0 @X0 1 r1 ]
 [v _parteBaixa `uc ~T0 @X0 1 r2 ]
 [f ]
-"183
-[; ;main.c: 183:     finalizarEnvio();
-[e = _RA0 -> -> 0 `i `b ]
-"184
-[; ;main.c: 184: }
-{
-[v _i `i ~T0 @X0 1 a ]
-[e = _i -> 0 `i ]
-[e $ < _i -> 8 `i 101  ]
-[e $U 102  ]
-[e :U 101 ]
-{
-"185
-[; ;main.c: 185: 
-[v _temp `uc ~T0 @X0 1 a ]
-[e = _temp -> & -> _parteAlta `i -> 128 `i `uc ]
-"186
-[; ;main.c: 186: void finalizarEnvio(){
-[e = _RA2 -> ? == -> _temp `i -> 128 `i : -> 1 `i -> 0 `i `b ]
-"187
-[; ;main.c: 187:     RA1 = 1;
-[e = _RA0 -> -> 1 `i `b ]
-"188
-[; ;main.c: 188:     _delay((unsigned long)((100)*(4000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
 "189
-[; ;main.c: 189:     RA1 = 0;
+[; ;main.c: 189:     finalizarEnvio();
 [e = _RA0 -> -> 0 `i `b ]
 "190
 [; ;main.c: 190: }
-[e = _parteAlta -> << -> _parteAlta `i -> 1 `i `uc ]
-"191
-}
-[e ++ _i -> 1 `i ]
-[e $ < _i -> 8 `i 101  ]
-[e :U 102 ]
-}
-"193
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $ < _i -> 8 `i 104  ]
-[e $U 105  ]
-[e :U 104 ]
+[e $ < _i -> 8 `i 108  ]
+[e $U 109  ]
+[e :U 108 ]
 {
-"194
+"191
+[; ;main.c: 191: 
 [v _temp `uc ~T0 @X0 1 a ]
-[e = _temp -> & -> _parteBaixa `i -> 128 `i `uc ]
-"195
+[e = _temp -> & -> _parteAlta `i -> 128 `i `uc ]
+"192
+[; ;main.c: 192: void finalizarEnvio(){
 [e = _RA2 -> ? == -> _temp `i -> 128 `i : -> 1 `i -> 0 `i `b ]
-"196
+"193
+[; ;main.c: 193:     RA1 = 1;
 [e = _RA0 -> -> 1 `i `b ]
-"197
+"194
+[; ;main.c: 194:     _delay((unsigned long)((100)*(4000000/4000000.0)));
 [e ( __delay (1 -> * -> -> 100 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
-"198
+"195
+[; ;main.c: 195:     RA1 = 0;
 [e = _RA0 -> -> 0 `i `b ]
-"199
-[e = _parteBaixa -> << -> _parteBaixa `i -> 1 `i `uc ]
-"200
+"196
+[; ;main.c: 196: }
+[e = _parteAlta -> << -> _parteAlta `i -> 1 `i `uc ]
+"197
 }
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 8 `i 104  ]
-[e :U 105 ]
+[e $ < _i -> 8 `i 108  ]
+[e :U 109 ]
 }
+"199
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 8 `i 111  ]
+[e $U 112  ]
+[e :U 111 ]
+{
+"200
+[v _temp `uc ~T0 @X0 1 a ]
+[e = _temp -> & -> _parteBaixa `i -> 128 `i `uc ]
 "201
-[e ( _finalizarEnvio ..  ]
+[e = _RA2 -> ? == -> _temp `i -> 128 `i : -> 1 `i -> 0 `i `b ]
 "202
-[e :UE 100 ]
-}
+[e = _RA0 -> -> 1 `i `b ]
+"203
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
 "204
+[e = _RA0 -> -> 0 `i `b ]
+"205
+[e = _parteBaixa -> << -> _parteBaixa `i -> 1 `i `uc ]
+"206
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 8 `i 111  ]
+[e :U 112 ]
+}
+"207
+[e ( _finalizarEnvio ..  ]
+"208
+[e :UE 107 ]
+}
+"210
 [v _finalizarEnvio `(v ~T0 @X0 1 ef ]
 {
 [e :U _finalizarEnvio ]
 [f ]
-"205
+"211
 [e = _RA1 -> -> 1 `i `b ]
-"206
+"212
 [e ( __delay (1 -> * -> -> 100 `i `d / -> -> 4000000 `l `d .4000000.0 `ul ]
-"207
+"213
 [e = _RA1 -> -> 0 `i `b ]
-"208
-[e :UE 107 ]
+"214
+[e :UE 114 ]
 }

@@ -1083,10 +1083,6 @@ void main(void) {
             for(i = 1; i < tamanho_kobra; i++)
                 if(kobra[i].j == kobra[0].j && kobra[i].i == kobra[0].i) pause = 1;
 
-            for(i = 0; i < tamanho_kobra; i++) {
-                renderizar(mapa, kobra[i]);
-            }
-
             for(i = tamanho_kobra - 1; i > 0; --i) {
                 kobra[i].i = kobra[i-1].i;
                 kobra[i].j = kobra[i-1].j;
@@ -1099,9 +1095,19 @@ void main(void) {
                 case 0x03: kobra[0].j = (--kobra[0].j)%8; break;
             }
 
+            for(char i = 0; i < 8; i++) mapa[i] = 0x00;
+
+            for(i = 0; i < tamanho_kobra; i++) {
+                renderizar(mapa, kobra[i]);
+            }
+
             renderizar(mapa, ovo);
             desenharMatriz(mapa);
-            _delay((unsigned long)((200)*(4000000/4000.0)));
+
+
+            _delay((unsigned long)((20)*(4000000/4000.0)));
+            for(i = 0; i < 15 - tamanho_kobra; i++)
+                _delay((unsigned long)((12)*(4000000/4000.0)));
 
             semente += kobra[0].i * 8 + kobra[0].j;
             for(i = 0; i < 8; i++)

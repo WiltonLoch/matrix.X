@@ -17,17 +17,17 @@
 [v _echo echo `II(v  1 e 1 0 ]
 "53
 [v _main main `(v  1 e 1 0 ]
-"131
+"137
 [v _inicializarJogo inicializarJogo `(v  1 e 1 0 ]
-"150
+"156
 [v _renderizar renderizar `T(v  1 e 1 0 ]
-"154
+"160
 [v _inicializarDisplay inicializarDisplay `(v  1 e 1 0 ]
-"168
+"174
 [v _desenharMatriz desenharMatriz `(v  1 e 1 0 ]
-"182
+"188
 [v _enviarParaDisplay enviarParaDisplay `(v  1 e 1 0 ]
-"204
+"210
 [v _finalizarEnvio finalizarEnvio `(v  1 e 1 0 ]
 "767 /opt/microchip/xc8/v2.10/pic/include/pic16f628a.h
 [v _CMCON CMCON `VEuc  1 e 1 @31 ]
@@ -58,20 +58,22 @@
 "53
 [v _main main `(v  1 e 1 0 ]
 {
+"104
+[v main@i_99 i `uc  1 a 1 72 ]
 [s S31 . 2 `uc 1 i 1 0 `uc 1 j 1 1 ]
 "56
 [v main@kobra kobra `[32]S31  1 a 64 0 ]
 "67
 [v main@mapa mapa `[8]uc  1 a 8 64 ]
 "57
-[v main@ovo ovo `S31  1 a 2 73 ]
+[v main@ovo ovo `S31  1 a 2 74 ]
 "55
-[v main@i i `uc  1 a 1 75 ]
+[v main@i i `uc  1 a 1 76 ]
 "54
-[v main@semente semente `uc  1 a 1 72 ]
-"129
+[v main@semente semente `uc  1 a 1 73 ]
+"135
 } 0
-"150
+"156
 [v _renderizar renderizar `T(v  1 e 1 0 ]
 {
 [v renderizar@mapa mapa `*.4uc  1 a 1 wreg ]
@@ -79,9 +81,9 @@
 [s S31 . 2 `uc 1 i 1 0 `uc 1 j 1 1 ]
 [v renderizar@aux aux `S31  1 p 2 4 ]
 [v renderizar@mapa mapa `*.4uc  1 a 1 6 ]
-"152
+"158
 } 0
-"131
+"137
 [v _inicializarJogo inicializarJogo `(v  1 e 1 0 ]
 {
 [v inicializarJogo@mapa mapa `*.4uc  1 a 1 wreg ]
@@ -90,54 +92,54 @@
 [v inicializarJogo@ovo ovo `*.4S31  1 p 1 4 ]
 [v inicializarJogo@kobra kobra `*.4S31  1 p 1 5 ]
 [v inicializarJogo@mapa mapa `*.4uc  1 a 1 7 ]
-"147
+"153
 } 0
-"154
+"160
 [v _inicializarDisplay inicializarDisplay `(v  1 e 1 0 ]
 {
-"166
+"172
 } 0
-"168
+"174
 [v _desenharMatriz desenharMatriz `(v  1 e 1 0 ]
 {
 [v desenharMatriz@vetor vetor `*.4uc  1 a 1 wreg ]
-"172
+"178
 [v desenharMatriz@j j `uc  1 a 1 24 ]
+"183
+[v desenharMatriz@i_124 i `uc  1 a 1 25 ]
 "177
-[v desenharMatriz@i_123 i `uc  1 a 1 25 ]
-"171
 [v desenharMatriz@i i `uc  1 a 1 23 ]
-"169
+"175
 [v desenharMatriz@temp temp `[8]uc  1 a 8 13 ]
-"170
+"176
 [v desenharMatriz@indice indice `uc  1 a 1 22 ]
-"168
+"174
 [v desenharMatriz@vetor vetor `*.4uc  1 a 1 wreg ]
 [v desenharMatriz@vetor vetor `*.4uc  1 a 1 21 ]
-"180
+"186
 } 0
-"182
+"188
 [v _enviarParaDisplay enviarParaDisplay `(v  1 e 1 0 ]
 {
 [v enviarParaDisplay@parteAlta parteAlta `uc  1 a 1 wreg ]
-"194
-[v enviarParaDisplay@temp_130 temp `uc  1 a 1 1 ]
-"185
+"200
+[v enviarParaDisplay@temp_131 temp `uc  1 a 1 1 ]
+"191
 [v enviarParaDisplay@temp temp `uc  1 a 1 0 ]
-"193
-[v enviarParaDisplay@i_129 i `i  1 a 2 4 ]
-"184
+"199
+[v enviarParaDisplay@i_130 i `i  1 a 2 4 ]
+"190
 [v enviarParaDisplay@i i `i  1 a 2 2 ]
-"182
+"188
 [v enviarParaDisplay@parteAlta parteAlta `uc  1 a 1 wreg ]
 [v enviarParaDisplay@parteBaixa parteBaixa `uc  1 p 1 5 ]
 [v enviarParaDisplay@parteAlta parteAlta `uc  1 a 1 6 ]
-"202
+"208
 } 0
-"204
+"210
 [v _finalizarEnvio finalizarEnvio `(v  1 e 1 0 ]
 {
-"208
+"214
 } 0
 "5 /opt/microchip/xc8/v2.10/pic/sources/c90/common/awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
